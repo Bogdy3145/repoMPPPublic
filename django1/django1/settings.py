@@ -38,6 +38,7 @@ GRAPH_MODELS = {
 INSTALLED_APPS = [
     "django_extensions",
     'rest_framework',
+    'corsheaders',
     'django1',
     "django.contrib.admin",
     "django.contrib.auth",
