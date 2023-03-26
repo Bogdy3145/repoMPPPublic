@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+from corsheaders.defaults import default_methods
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -36,9 +36,9 @@ GRAPH_MODELS = {
 }
 
 INSTALLED_APPS = [
+    "corsheaders",
     "django_extensions",
     'rest_framework',
-    'corsheaders',
     'django1',
     "django.contrib.admin",
     "django.contrib.auth",
@@ -49,7 +49,7 @@ INSTALLED_APPS = [
 ]
 #da
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware"
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
