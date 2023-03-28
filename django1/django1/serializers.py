@@ -14,24 +14,40 @@ class CarsSerializer(serializers.ModelSerializer):
     engine = serializers.CharField(read_only=True)
     type = serializers.CharField(read_only=True)
     year = serializers.IntegerField(read_only=True)
-    hp = serializers.IntegerField(read_only=True)
+    horsepower = serializers.IntegerField(read_only=True)
 
-
-    def validate_brand_id(self, value):
-        filter = Brand.objects.filter(id=value)
-        if not filter.exists():
-            raise serializers.ValidationError("Brand does not exist")
-        return value
 
     class Meta:
         model = Cars
-        fields = ['id', 'name', 'description', 'engine', 'type', 'year', 'hp']
+        fields = ['id', 'name', 'description', 'engine', 'type', 'year', 'horsepower']
 
+
+class CarsSerializer2(serializers.ModelSerializer):
+    name = serializers.SlugRelatedField(queryset=Brand.objects.all(), slug_field='name')
+    description = serializers.CharField(max_length=255)
+    engine = serializers.CharField(max_length=255)
+    type = serializers.CharField(max_length=255)
+    year = serializers.IntegerField()
+    horsepower = serializers.IntegerField()
+
+    class Meta:
+        model = Cars
+        fields = ['id', 'name', 'description', 'engine', 'type', 'year', 'horsepower']
+
+    def validate_year(self,value):
+        if value < 1800:
+            raise serializers.ValidationError("Year can not be less than 1800")
+        return value
+
+    def validate_horsepower(self,value):
+        if value < 0:
+            raise serializers.ValidationError("Hp can not be less than 0")
+        return value
 
 class CarDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cars
-        fields = ['id', 'name', 'description', 'engine', 'type', 'year', 'hp']
+        fields = ['id', 'name', 'description', 'engine', 'type', 'year', 'horsepower']
         depth=1
 
 
@@ -40,6 +56,11 @@ class BrandSerializer(serializers.ModelSerializer):
     class Meta:
         model = Brand
         fields = ['id', 'name', 'founding_year', 'owner_name', 'rarity', 'hq_address']
+
+    def validate_founding_year(self,value):
+        if (value < 0):
+            raise serializers.ValidationError("Founding year can not be less than 0")
+        return value
 
 
 class BrandDetailSerializer(serializers.ModelSerializer):

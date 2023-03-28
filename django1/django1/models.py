@@ -26,7 +26,7 @@ class Cars(models.Model):
     horsepower = models.IntegerField(default="0")
 
     def __str__(self):
-        return str(self.name) + ' ' + self.description + ' ' + self.engine + ' ' + self.type + ' ' + str(self.year)
+        return str(self.name) + ' ' + self.description + ' ' + self.engine + ' ' + self.type + ' ' + str(self.year) + ' ' + str(self.horsepower)
 
 
 class Customers(models.Model):

@@ -4,7 +4,8 @@ from .models import Cars
 from .models import Brand
 from .models import Customers
 from .models import CarOwnership
-from .serializers import CarsSerializer, CustomerDetailSerializer, BrandWithCarSerializer, StatisticFoundingSerializer
+from .serializers import CarsSerializer, CustomerDetailSerializer, BrandWithCarSerializer, StatisticFoundingSerializer, \
+    CarsSerializer2
 from .serializers import BrandSerializer
 from .serializers import CustomerSerializer
 from .serializers import CarDetailSerializer
@@ -48,10 +49,15 @@ def cars_list(request, format=None):
    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     if request.method == 'POST':
-        serializer = CarsSerializer(data=request.data)
+        #try:
+        serializer = CarsSerializer2(data=request.data)
+        #except Exception as e:
+         #   print(e)
+
 
         if serializer.is_valid():
             serializer.save()
+            print(serializer.data)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         print(serializer.errors)
         return Response(status=status.HTTP_404_NOT_FOUND)
@@ -66,32 +72,10 @@ def brand_list(request, format=None):
         return Response(serializer.data)
 
     if request.method == 'POST':
-
-#         brand_data = request.data
-#         print(brand_data['car'])
-#         print(brand_data['car'])
-#         print(brand_data['car'])
-#         print(brand_data['car'])
-#         aux = int(brand_data['car'])
-#         print(aux)
-#         print(brand_data['name'])
-# #        print(Brand.objects.get(name=brand_data['name']))
-
-        #car_modified = Cars.objects.get(id=aux)
-        #car_modified.name = Brand.objects.get(name=brand_data['name'])
-        #car_modified.save()
-
-        #Cars.objects.filter(pk=aux).update(name=brand_data['name'])
-
         serializer = BrandSerializer(data=request.data)
-        #serializer = BrandWithCarSerializer(data=request.data)
 
         if serializer.is_valid():
             serializer.save()
-            #car_modified = Cars.objects.get(id=aux)
-            #car_modified.name = Brand.objects.get(name=brand_data['name'])
-            #car_modified.save()
-            # serializer.update_car()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         print(serializer.errors)
         return Response(status=status.HTTP_404_NOT_FOUND)
@@ -290,3 +274,38 @@ def assigning_brands_to_cars(request):
 
         return Response(None)
 
+@api_view(['POST'])
+def assigning_brands_to_new_cars(request):
+    if request.method == 'POST':
+        brand_name = request.data["name"]
+
+        car_id_list = request.data.get('car_id_list')
+
+        # Loop through the list of car ids and new car brands to update
+        for item in car_id_list:
+                try:
+                    new_car = Cars.objects.create(name=Brand.objects.get(name=brand_name),
+                                         description=item['description'],
+                                          engine=item['engine'],
+                                           type=item['type'],
+                                            year=item['year'],
+                                            horsepower=item['horsepower'])
+                except Brand.DoesNotExist:
+                     return Response(status=status.HTTP_404_NOT_FOUND)
+
+                new_car.save()
+                #car = Car.objects.get(id=item['car_id'])
+                #car.CarBrand = CarBrand.objects.get(CarBrand=item['newcarbrand'])
+                #car.save()
+
+        return Response({'message': 'Car brands updated successfully.'})
+
+
+# {
+#     "name": "Audi",
+#     "car_id": [
+#         {"description": "desc", "engine": "eng", "type": "type", "year": 2023, "horsepower": 167},
+#         {"description": "another desc", "engine": "eng", "type": "type", "year": 2023, "horsepower": 167}
+#     ]
+#
+# }
