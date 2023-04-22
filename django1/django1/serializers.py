@@ -59,6 +59,7 @@ class BrandSerializer(serializers.ModelSerializer):
 
 
 
+
 class BrandDetailSerializer(serializers.ModelSerializer):
     cars = CarsSerializer(many=True, read_only=True)
 
