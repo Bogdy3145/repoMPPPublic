@@ -35,11 +35,29 @@ GRAPH_MODELS = {
   'group_models': True,
 }
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',),
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    #'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'BOGDI API',
+    'DESCRIPTION': "Documentation for API",
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'Public': True,
+    # OTHER SETTINGS
+}
+
 INSTALLED_APPS = [
     "corsheaders",
+    'drf_spectacular',
     "django_extensions",
     'rest_framework',
     'django1',
+    'rest_framework_swagger',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",

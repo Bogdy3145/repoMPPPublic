@@ -17,8 +17,17 @@ from django.contrib import admin
 from django.urls import path
 from django1 import controller
 from rest_framework.urlpatterns import format_suffix_patterns
+from rest_framework_swagger.views import get_swagger_view
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+
+schema_view = get_swagger_view(title='Jaseci API')
 
 urlpatterns = [
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    # Optional UI:
+    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+    path('docs/', schema_view),
     path("admin/", admin.site.urls),
     path("cars/", controller.cars_list),
     path('cars/<int:id>', controller.cars_detail),

@@ -57,10 +57,6 @@ class BrandSerializer(serializers.ModelSerializer):
         model = Brand
         fields = ['id', 'name', 'founding_year', 'owner_name', 'rarity', 'hq_address']
 
-    def validate_founding_year(self,value):
-        if (value < 0):
-            raise serializers.ValidationError("Founding year can not be less than 0")
-        return value
 
 
 class BrandDetailSerializer(serializers.ModelSerializer):
