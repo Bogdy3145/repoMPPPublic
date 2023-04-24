@@ -51,7 +51,7 @@ def generate_sql(cars):
     with open("cars.sql", "w") as file:
         file.write("TRUNCATE TABLE django1_cars RESTART IDENTITY CASCADE;")
 
-    sql = "INSERT INTO django1_cars (name_id, description, engine, type, year, horsepower) VALUES "
+    sql = "INSERT INTO django1_cars (name, description, engine, type, year, horsepower) VALUES "
     i = 0
     for car in cars:
         sql += f"('{car.name}', '{car.description}', '{car.engine}', '{car.type}', '{car.year}', '{car.hp}'),"
@@ -62,11 +62,11 @@ def generate_sql(cars):
                 file.write(sql[:-1] + ";")
 
             print(f"Written {i} rows to file")
-            sql = "INSERT INTO django1_cars (name_id, description, engine, type, year, horsepower) VALUES  "
+            sql = "INSERT INTO django1_cars (name, description, engine, type, year, horsepower) VALUES  "
 
         i += 1
 
-    if sql != "INSERT INTO django1_cars (name_id, description, engine, type, year, horsepower) VALUES ":
+    if sql != "INSERT INTO django1_cars (name, description, engine, type, year, horsepower) VALUES ":
         with open("cars.sql", "a") as file:
             file.write(sql[:-1] + ";")
         print(f"Written {i} rows to file - last batch")
