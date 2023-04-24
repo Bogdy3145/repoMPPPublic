@@ -33,7 +33,7 @@ def generate_customer(amount):
         year = faker.random_int(1920, 2023)
         address = faker.address()
         gender = random.choice(GENDER)
-        phone = faker.phone()
+        phone = faker.phone_number()
 
         customers.append(Customer(name, year, address, gender, phone))
 
@@ -44,7 +44,7 @@ def generate_sql(customers):
     with open("customers.sql", "w") as file:
         file.write("TRUNCATE TABLE django1_customers RESTART IDENTITY CASCADE;")
 
-    sql = "INSERT INTO django1_customers (name, year, address, gender, phone) VALUES "
+    sql = "INSERT INTO django1_customers (name, year_of_birth, address, gender, phone) VALUES "
     i = 0
     for customer in customers:
         sql += f"('{customer.name}', '{customer.year}', '{customer.address}', '{customer.gender}', '{customer.phone}'),"
@@ -55,11 +55,11 @@ def generate_sql(customers):
                 file.write(sql[:-1] + ";")
 
             print(f"Written {i} rows to file")
-            sql = "INSERT INTO django1_customers (name, year, address, gender, phone) VALUES "
+            sql = "INSERT INTO django1_customers (name, year_of_birth, address, gender, phone) VALUES "
 
         i += 1
 
-    if sql != "INSERT INTO django1_customers (name, year, address, gender, phone) VALUES ":
+    if sql != "INSERT INTO django1_customers (name, year_of_birth, address, gender, phone) VALUES ":
         with open("customers.sql", "a") as file:
             file.write(sql[:-1] + ";")
         print(f"Written {i} rows to file - last batch")

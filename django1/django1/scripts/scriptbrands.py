@@ -4,7 +4,7 @@ ROWS_TO_GENERATE = 1000
 ROWS_PER_BATCH = 100
 
 from faker import Faker
-from constants import BRANDS, RARITY
+from constants import BRANDS, RARITY, CAR_NOUNS
 
 used_brands = []
 
@@ -41,7 +41,7 @@ def generate_brands(amount):
             print(f"Generated {i} rows")
 
 
-        name = faker.unique.name()
+        name = faker.unique.company() + ' ' + faker.random_element(CAR_NOUNS)
 
         if (i<2000):
             f.write(str(name) + ',')
@@ -51,7 +51,7 @@ def generate_brands(amount):
         on = faker.name()
         rarity = random.choice(RARITY)
         hq = faker.address()
-        desc = faker.text()[:20]
+        desc = faker.sentence(nb_words=10) + " " + faker.sentence(nb_words=10)
 
         brands.append(Brand(name, fy, on, rarity, hq, desc))
 
