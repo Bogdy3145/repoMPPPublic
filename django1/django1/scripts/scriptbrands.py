@@ -44,8 +44,8 @@ def generate_brands(amount):
         name = faker.name()
 
         if (i<2000):
-            f.write(str(used_brands) + ',')
-            used_brands.append(name)
+            f.write(str(name) + ',')
+            #used_brands.append(name)
 
         fy = random.randint(1800,2023)
         on = faker.name()

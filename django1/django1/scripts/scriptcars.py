@@ -26,7 +26,7 @@ def generate_cars(amount):
 
     with open('usedbrands.txt', 'r') as f:
         txt = f.read()
-        used_brands = txt.split()
+        used_brands = txt.split(',')
 
 
     cars = []
@@ -49,9 +49,9 @@ def generate_cars(amount):
 
 def generate_sql(cars):
     with open("cars.sql", "w") as file:
-        file.write("TRUNCATE TABLE django1_car RESTART IDENTITY CASCADE;")
+        file.write("TRUNCATE TABLE django1_cars RESTART IDENTITY CASCADE;")
 
-    sql = "INSERT INTO django1_car (name, description, engine, type, year, hp) VALUES "
+    sql = "INSERT INTO django1_cars (name, description, engine, type, year, hp) VALUES "
     i = 0
     for car in cars:
         sql += f"('{car.name}', '{car.description}', '{car.engine}', '{car.type}', '{car.year}', '{car.hp}'),"
@@ -62,11 +62,11 @@ def generate_sql(cars):
                 file.write(sql[:-1] + ";")
 
             print(f"Written {i} rows to file")
-            sql = "INSERT INTO django1_car (name, description, engine, type, year, hp) VALUES  "
+            sql = "INSERT INTO django1_cars (name, description, engine, type, year, hp) VALUES  "
 
         i += 1
 
-    if sql != "INSERT INTO django1_car (name, description, engine, type, year, hp) VALUES ":
+    if sql != "INSERT INTO django1_cars (name, description, engine, type, year, hp) VALUES ":
         with open("cars.sql", "a") as file:
             file.write(sql[:-1] + ";")
         print(f"Written {i} rows to file - last batch")
