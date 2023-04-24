@@ -1,10 +1,9 @@
 import random
 
-ROWS_TO_GENERATE = 1000000
+ROWS_TO_GENERATE = 1000
 ROWS_PER_BATCH = 1000
 
 from faker import Faker
-from scriptbrands import used_brands
 from constants import TYPES, ENGINES
 
 
@@ -24,6 +23,11 @@ class Car:
 
 def generate_cars(amount):
     faker: Faker = Faker()
+
+    with open('usedbrands.txt', 'r') as f:
+        txt = f.read()
+        used_brands = txt.split()
+
 
     cars = []
     for i in range(amount):

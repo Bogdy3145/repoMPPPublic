@@ -6,7 +6,7 @@ ROWS_PER_BATCH = 100
 from faker import Faker
 from constants import BRANDS, RARITY
 
-used_brands =[]
+used_brands = []
 
 class Brand:
     # name = models.CharField(max_length = 128)
@@ -33,6 +33,8 @@ def generate_brands(amount):
 
     used_brands = []
     brands = []
+    f = open("usedbrands.txt", "w")
+
     for i in range(amount):
 
         if i % ROWS_PER_BATCH == 0:
@@ -42,6 +44,7 @@ def generate_brands(amount):
         name = faker.name()
 
         if (i<2000):
+            f.write(str(used_brands) + ',')
             used_brands.append(name)
 
         fy = random.randint(1800,2023)
@@ -52,7 +55,9 @@ def generate_brands(amount):
 
         brands.append(Brand(name, fy, on, rarity, hq, desc))
 
+    f.close()
     return brands
+
 
 
 def generate_sql(brands):
