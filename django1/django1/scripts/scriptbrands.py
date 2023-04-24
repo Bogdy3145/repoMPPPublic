@@ -6,6 +6,7 @@ ROWS_PER_BATCH = 100
 from faker import Faker
 from constants import BRANDS, RARITY
 
+used_brands =[]
 
 class Brand:
     # name = models.CharField(max_length = 128)
@@ -30,13 +31,19 @@ class Brand:
 def generate_brands(amount):
     faker: Faker = Faker()
 
+    used_brands = []
     brands = []
     for i in range(amount):
 
         if i % ROWS_PER_BATCH == 0:
             print(f"Generated {i} rows")
 
-        name = random.choice(BRANDS)
+
+        name = faker.name()
+
+        if (i<2000):
+            used_brands.append(name)
+
         fy = random.randint(1800,2023)
         on = faker.name()
         rarity = random.choice(RARITY)
@@ -55,7 +62,7 @@ def generate_sql(brands):
     sql = "INSERT INTO django1_brand (name, founding_year, owner_name, rarity, hq_address, description) VALUES "
     i = 0
     for brand in brands:
-        sql += f"('{brand.name}', '{brand.founding_year}', '{brand.owner_name}', '{brand.rarity}', '{brand.hq_address}', '{brand.desc}'),"
+        sql += f"('{brand.name}', '{brand.founding_year}', '{brand.owner_name}', '{brand.rarity}', '{brand.hq_address}', '{brand.description}'),"
         if i % ROWS_PER_BATCH == 0:
             # write the sql to a file
 
