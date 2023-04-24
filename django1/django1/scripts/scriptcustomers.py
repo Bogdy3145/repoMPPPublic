@@ -33,7 +33,7 @@ def generate_customer(amount):
         year = faker.random_int(1920, 2023)
         address = faker.address()
         gender = random.choice(GENDER)
-        phone = faker.phone_number()
+        phone = random.randint(100000000,999999999)
 
         customers.append(Customer(name, year, address, gender, phone))
 
