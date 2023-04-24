@@ -37,11 +37,11 @@ def generate_brands(amount):
 
     for i in range(amount):
 
-        if i % ROWS_PER_BATCH*100 == 0:
+        if i % ROWS_PER_BATCH*1000 == 0:
             print(f"Generated {i} rows")
 
 
-        name = faker.company() + ' ' + faker.random_element(CAR_NOUNS) + ' ' + 'i'
+        name = faker.company() + ' ' + faker.random_element(CAR_NOUNS) + ' ' + i
 
         if (i<2000):
             f.write(str(name) + ',')

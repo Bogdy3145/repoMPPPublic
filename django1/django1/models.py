@@ -45,7 +45,7 @@ class Customers(models.Model):
 class CarOwnership(models.Model):
     car_id=models.ForeignKey(Cars, on_delete=models.CASCADE, related_name="car_id")
     customer_id=models.ForeignKey(Customers, on_delete=models.CASCADE, related_name="customer_id")
-    date=models.DateField(default="2000-10-10")
+    #date=models.DateField(default="2000-10-10")
     name_of_dealer = models.CharField(max_length=200, default="0")
     price = models.IntegerField(default=0, null=True)
 
