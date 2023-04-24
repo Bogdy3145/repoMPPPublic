@@ -41,7 +41,7 @@ def generate_brands(amount):
             print(f"Generated {i} rows")
 
 
-        name = faker.name()
+        name = faker.unique.name()
 
         if (i<2000):
             f.write(str(name) + ',')

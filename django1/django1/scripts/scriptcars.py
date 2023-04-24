@@ -1,6 +1,6 @@
 import random
 
-ROWS_TO_GENERATE = 1000
+ROWS_TO_GENERATE = 10000
 ROWS_PER_BATCH = 1000
 
 from faker import Faker
